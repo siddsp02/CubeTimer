@@ -29,6 +29,8 @@ class Move(NamedTuple):
     def __mul__(self, i: int) -> Self:
         i %= MAX_ROTATIONS
         if i == 0:
+            return type(self)("")
+        if i == 1:
             return self
         if i % 2 == 0:
             return self.double()

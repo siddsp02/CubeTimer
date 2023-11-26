@@ -8,14 +8,14 @@ MAX_ROTATIONS = 4
 
 
 class Move(NamedTuple):
-    value: str
+    value: str = ""
 
     def __str__(self) -> str:
         return str(self.value)
 
     def __add__(self, other: Self) -> Self | tuple[Self, Self]:
         if other == -self:
-            return type(self)("")
+            return type(self)()
         if self.is_neutral:
             return other
         if other == self:
@@ -29,7 +29,7 @@ class Move(NamedTuple):
     def __mul__(self, i: int) -> Self:
         i %= MAX_ROTATIONS
         if i == 0:
-            return type(self)("")
+            return type(self)()
         if i == 1:
             return self
         if i % 2 == 0:
@@ -49,14 +49,14 @@ class Move(NamedTuple):
 
     def double(self) -> Self:
         if self.value.endswith("2"):
-            return type(self)("")
+            return type(self)()
         if self.value.endswith("'"):
             return -self
         return type(self)(self.value + "2")
 
     @property
     def is_neutral(self) -> bool:
-        return self == type(self)("")
+        return self == type(self)()
 
     @property
     def base(self) -> Self:
